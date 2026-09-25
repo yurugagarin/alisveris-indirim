@@ -12,48 +12,34 @@ def get(u, **kw):
     print(f"\n##### {u}\n# status={r.status_code} ct={r.headers.get('content-type')} len={len(r.text)} final={r.url}")
     return r
 
-def threads(t):
-    out = []
-    for m in re.findall(r'data-vue3=\'(\{"name":"ThreadMainListItemNormalizer".*?)\'', t):
-        out.append(json.loads(html.unescape(m))["props"]["thread"])
-    return out
-
-r = get("https://www.mydealz.de/search/deals?merchant-id=50")
-i = r.text.find('"sortBy"'); print("SORT:", html.unescape(r.text[i:i+900]))
-for th in threads(r.text)[:8]:
-    print(th["publishedAt"], th["isExpired"], th["price"], th["nextBestPrice"], th["mainGroup"], th["title"][:60])
-for u in ["https://www.mydealz.de/search/deals?merchant-id=50&sortBy=new", "https://www.mydealz.de/search?merchant-id=50&sortBy=new",
-          "https://www.mydealz.de/search?q=zara", "https://www.mydealz.de/search?q=amazon", "https://www.mydealz.de/search?q=zara+home",
-          "https://www.mydealz.de/search?q=billy+regal", "https://www.mydealz.de/search?q=ikea&sortBy=new"]:
-    r = get(u); ts = threads(r.text)
-    print(" merchants:", sorted({(t["merchant"] or {}).get("merchantName", "-") + "#" + str((t["merchant"] or {}).get("merchantId")) for t in ts}))
-    print(" dates:", [t["publishedAt"] for t in ts[:10]])
-
-# IKEA discounted product (DRÖNA)
-r = get("https://www.ikea.com/de/de/search/?q=dr%C3%B6na")
-links = sorted(set(re.findall(r'https://www\.ikea\.com/de/de/p/[a-z0-9\-]+-\d{8}/', r.text)))
-print("ikea links", links[:10])
-for l in links[:2]:
-    t = get(l).text
-    for pat in [r'.{0,200}30 Tage.{0,300}', r'.{0,200}[Nn]iedrigst.{0,300}', r'data-product-price[^>]{0,200}',
-                r'"offers":\{.{0,400}', r'.{0,100}pip-price-package__previous.{0,300}', r'.{0,150}[Vv]orher.{0,200}',
-                r'.{0,150}strikethrough.{0,200}', r'.{0,100}"previous.{0,200}']:
-        hits = re.findall(pat, t)
-        print("  ", pat, len(hits), [html.unescape(re.sub(r"<[^>]+>", " ", h))[:400] for h in hits[:3]])
-    break
-
-# IKEA asisonline
-r = get("https://www.ikea.com/de/de/asisonline")
-t = r.text
-print("title", re.findall(r"<title>(.*?)</title>", t))
-chunks = sorted(set(re.findall(r'/de/de/asisonline/_next/static/chunks/[A-Za-z0-9_\-\.]+\.js', t)))
-print("chunks", len(chunks))
-seen = set()
+r = get("https://www.ikea.com/de/de/asisonline/")
+nd = json.loads(re.search(r'__NEXT_DATA__" type="application/json">(.*?)</script>', r.text).group(1))
+pp = nd["props"]["pageProps"]
+print("pageProps keys", list(pp.keys()))
+stores = pp.get("stores") or []
+print([s for s in stores if "Berlin" in s.get("name", "")])
+chunks = sorted(set(re.findall(r'/de/de/asisonline/_next/static/chunks/[A-Za-z0-9_\-\.]+\.js', r.text)))
 for c in chunks:
     js = S.get("https://www.ikea.com" + c, timeout=20).text
-    for m in re.findall(r'.{0,160}(?:circular-asis|web-api\.ikea|/offers|storeIds|stores\?).{0,220}', js):
-        k = m[:120]
-        if k not in seen:
-            seen.add(k); print("JS", c[-20:], m[:380])
-for pat in [r'.{0,100}(?:circular-asis|web-api).{0,300}', r'"stores?".{0,300}', r'__NEXT_DATA__.{0,1500}']:
-    print(pat, [h[:500] for h in re.findall(pat, t)[:4]])
+    for m in re.findall(r'.{0,250}(?:groupedOffers|storeIds|store_ids|"stores"|sortBy|sort:).{0,250}', js)[:12]:
+        print("JS", c[-18:], m[:500])
+berlin = [s for s in stores if "Berlin" in s.get("name", "")]
+ids = [str(s["id"]) for s in berlin]; sids = [s["store_id"] for s in berlin]
+base = "https://web-api.ikea.com/circular/circular-asis/offers/grouped/search?languageCode=de&size=4&page=0"
+for extra in ["", "&storeIds=" + ",".join(ids), "&storeIds=" + ",".join(sids), "&stores=" + ",".join(ids), "&storeId=" + ids[0] if ids else ""]:
+    rr = get(base + extra, headers={"Accept": "application/json", "Origin": "https://www.ikea.com", "Referer": "https://www.ikea.com/"})
+    print(rr.text[:1800])
+rr = get("https://web-api.ikea.com/circular/circular-asis/markets", headers={"Accept": "application/json"}); print(rr.text[:500])
+
+# IKEA search API to find a discounted product
+for q in ["dröna", "tjusig", "åsjordfly"]:
+    rr = get("https://sik.search.blue.cdtapps.com/de/de/search-result-page?q=" + q + "&types=PRODUCT&size=3",
+             headers={"Accept": "application/json"})
+    try:
+        d = rr.json()
+        items = d["searchResultPage"]["products"]["main"]["items"]
+        for it in items[:3]:
+            p = it.get("product", {})
+            print(p.get("pipUrl"), json.dumps({k: p.get(k) for k in ("salesPrice", "discount", "priceNumeral", "previous", "lowestPrice", "tag", "highlight")}, ensure_ascii=False)[:600])
+    except Exception as e:
+        print("ERR", e, rr.text[:300])
