@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>İndirim Takip</title>
+<meta name="description" content="Kişisel indirim takip sitesi (Berlin / Almanya)">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏷️</text></svg>">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/common.js"></script>
+</head>
+<body>
+<header class="top"><div class="top-inner">
+  <a class="brand" href="./">🏷️ İndirim Takip</a>
+  <nav class="tabs">
+    <a href="./" aria-current="page">İndirimler</a>
+    <a href="wishlist.html">İstek listem</a>
+    <a href="status.html">Durum</a>
+  </nav>
+  <button class="btn" id="theme-btn" type="button" title="Tema">🌓</button>
+</div></header>
+<main>
+<p class="meta" id="meta">Yükleniyor…</p>
+<section class="filters" aria-label="Filtreler">
+  <label>Mağaza<select id="f-store"></select></label>
+  <label>Kategori<select id="f-cat"></select></label>
+  <label>En az indirim: <b id="f-min-val">%30+</b><input type="range" id="f-min" min="30" max="90" step="5" value="30"></label>
+  <label>Ara<input type="search" id="f-q" placeholder="ürün adı…"></label>
+  <div class="full row">
+    <button class="btn" id="f-new" aria-pressed="false" type="button">Sadece YENİ</button>
+    <button class="btn" id="f-fav" aria-pressed="false" type="button">★ Favoriler</button>
+    <button class="btn" id="f-sus" aria-pressed="false" type="button">Şüphelileri gizle</button>
+    <button class="btn" id="f-hidden" aria-pressed="false" type="button">Gizlileri göster</button>
+    <button class="btn" id="mark-all" type="button">Hepsini görüldü yap</button>
+  </div>
+</section>
+<p class="meta" id="count"></p>
+<section class="grid" id="grid" aria-live="polite"></section>
+</main>
+<footer>Veriler mydealz.de, ikea.com/de ve mağaza sayfalarından otomatik toplanır; fiyatlar değişmiş olabilir, satın almadan önce kontrol et. Görüldü/gizle/favori tercihlerin yalnızca bu tarayıcıda saklanır.</footer>
+<script src="assets/deals.js"></script>
+</body>
+</html>
