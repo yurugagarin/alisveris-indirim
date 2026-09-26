@@ -44,9 +44,13 @@ jobs:
 
       - name: Yayındaki önceki durumu al
         run: |
-          git fetch -q --depth=1 origin gh-pages 2>/dev/null \
-            && git show origin/gh-pages:data/status.json > "$RUNNER_TEMP/prev_status.json" 2>/dev/null \
-            || echo "gh-pages henüz yok"
+          # Önce yayındaki site (her iki Pages modunda da güncel), olmazsa gh-pages dalı
+          owner="$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')"
+          url="https://${owner}.github.io/${{ github.event.repository.name }}/data/status.json"
+          curl -fsSL --max-time 15 "$url?t=$(date +%s)" -o "$RUNNER_TEMP/prev_status.json" \
+            || { git fetch -q --depth=1 origin gh-pages 2>/dev/null \
+                 && git show origin/gh-pages:data/status.json > "$RUNNER_TEMP/prev_status.json" 2>/dev/null; } \
+            || echo "Önceki durum bulunamadı"
 
       - name: Pipeline
         id: run
