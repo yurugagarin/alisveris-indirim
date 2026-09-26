@@ -1,22 +1,21 @@
 name: İndirimleri güncelle
 
 on:
-  schedule:
-    # GitHub cron'u UTC'dir. Berlin 07:00–23:00 aralığı yazın (CEST, UTC+2) 05:00–21:00 UTC,
-    # kışın (CET, UTC+1) 06:00–22:00 UTC'ye denk gelir. İkisini de kapsayan UTC aralığında
-    # 30 dakikada bir tetiklenir; "Berlin saati kontrolü" adımı aralık dışındaki
-    # (yaz/kış farkından doğan) fazladan çalışmaları birkaç saniyede sonlandırır.
-    - cron: "0,30 5-21 * * *"
-    - cron: "0 22 * * *"
+  # Otomatik çalıştırma kapalı (zamanlama ve push tetikleyicileri kaldırıldı).
+  # Yalnızca Actions → "İndirimleri güncelle" → Run workflow ile elle çalışır.
+  # Yeniden açmak için şunları "on:" altına geri ekle:
+  #   schedule:
+  #     - cron: "0,30 5-21 * * *"
+  #     - cron: "0 22 * * *"
+  #   push:
+  #     branches: [main]
+  #     paths: ["config/**", "tracker/**", "site/**", ".github/workflows/update.yml"]
   workflow_dispatch:
     inputs:
       force:
         description: "Aktif saat kontrolünü atla"
         type: boolean
         default: true
-  push:
-    branches: [main]
-    paths: ["config/**", "tracker/**", "site/**", ".github/workflows/update.yml"]
 
 permissions:
   contents: write

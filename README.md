@@ -1,5 +1,8 @@
 # 🏷️ Kişisel İndirim Takip (Berlin / Almanya)
 
+> **Durum: otomatik çalıştırma KAPALI.** Zamanlama ve push tetikleyicileri `.github/workflows/update.yml`
+> dosyasından kaldırıldı; site son verisiyle atıl duruyor. Yeniden açmak için o dosyadaki yorum satırlarına bak.
+
 IKEA, Zara, Zara Home ve Amazon indirimlerini **mydealz.de** üzerinden, istek listendeki ürünleri
 de mağaza sayfaları ve mydealz üzerinden takip eden, tamamen ücretsiz çalışan kişisel bir site.
 
