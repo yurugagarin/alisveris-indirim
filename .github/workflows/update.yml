@@ -15,7 +15,7 @@ on:
         type: boolean
         default: true
   push:
-    branches: [main, "claude/trusting-hamilton-xtgdvh"]
+    branches: [main]
     paths: ["config/**", "tracker/**", "site/**", ".github/workflows/update.yml"]
 
 permissions:

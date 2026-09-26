@@ -27,8 +27,8 @@ vermediği için bunu bir kez elle yapman gerekiyor:
 
 1–2 dakika içinde site https://yurugagarin.github.io/alisveris-indirim/ adresinde açılır.
 
-> Zamanlanmış çalışmalar (cron) yalnızca **varsayılan dalda (`main`)** çalışır. Bu dosyaların
-> `main` dalında olduğundan emin ol.
+> Zamanlanmış çalışmalar (cron) yalnızca **varsayılan dalda (`main`)** çalışır; tüm düzenlemeleri
+> `main` dalında yap.
 
 ## İstek listesine ürün ekleme
 
