@@ -1,0 +1,42 @@
+# Genel ayarlar
+
+# Ana sayfada gösterilecek en düşük indirim oranı (%). İstek listesinde de
+# "fırsat" ve "şüpheli indirim" hesaplarında bu eşik kullanılır.
+min_discount: 30
+
+# Fırsatlar ana sayfada kaç gün tutulsun
+keep_days: 14
+
+# Ana sayfadaki en fazla fırsat sayısı
+max_deals: 500
+
+# Mağaza ürün sayfası (IKEA, Zara, Zara Home) kontrolü: ürün başına günde en fazla
+# kaç istek atılsın. Kontroller aktif saatlere eşit aralıkla yayılır.
+product_checks_per_day: 4
+
+# İstek listesi ürünleri için mydealz anahtar kelime araması kaç saatte bir yapılsın
+wishlist_mydealz_interval_hours: 2
+
+# Zamanlama (GitHub Actions bu saatler dışında hiçbir şey yapmadan çıkar)
+timezone: Europe/Berlin
+active_start: "07:00"
+active_end: "23:00"
+
+mydealz:
+  # Kategori bazlı RSS akışları. Bu akışlardaki fırsatlardan yalnızca
+  # config/stores.yaml'daki mağazalara ait olanlar alınır.
+  rss_feeds:
+    - {name: "Home & Living", url: "https://www.mydealz.de/rss/gruppe/home-living"}
+    - {name: "Fashion & Accessoires", url: "https://www.mydealz.de/rss/gruppe/fashion-accessoires"}
+    - {name: "Tüm yeni fırsatlar", url: "https://www.mydealz.de/rss/alles"}
+    - {name: "Trend (hot)", url: "https://www.mydealz.de/rss/trending"}
+
+# IKEA "Fundgrube / Circular Hub" (ikinci el, indirimli ürünler; online rezervasyon)
+ikea_circular:
+  enabled: true
+  stores:
+    "324": Berlin-Lichtenberg
+    "394": Berlin-Spandau
+    "421": Berlin-Tempelhof
+    "129": Berlin-Waltersdorf
+  max_items: 200

@@ -1,0 +1,19 @@
+# Takip edilen mağazalar. Her satır bir mağaza.
+#
+# Yeni mağaza eklemek için tek satır yeter, örnek:
+#   - {name: H&M}
+# mydealz'daki mağaza (merchant) kimliği ilk çalışmada otomatik bulunur ve
+# data/merchants.json dosyasına kaydedilir.
+#
+# İsteğe bağlı alanlar:
+#   mydealz_merchant_id: mydealz mağaza kimliği (otomatik bulunamazsa elle yaz)
+#   merchants: mydealz'daki mağaza adları (varsayılan: name)
+#   search:    mydealz anahtar kelime araması (merchant kimliği yoksa kullanılır)
+#   include:   başlıkta bu kelimelerden biri geçmeli
+#   exclude:   başlıkta bu kelimeler geçerse alma
+#   pages:     mydealz'da kaç sayfa taransın (varsayılan 1, sayfa başı ~30 fırsat)
+stores:
+  - {name: IKEA, mydealz_merchant_id: 50}
+  - {name: Zara, mydealz_merchant_id: 945, exclude: ["zara home"]}
+  - {name: Zara Home, merchants: ["ZARA", "Zara Home"], search: "zara home", include: ["zara home"]}
+  - {name: Amazon, mydealz_merchant_id: 3, pages: 2}

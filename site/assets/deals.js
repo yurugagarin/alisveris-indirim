@@ -134,7 +134,7 @@
 
   loadJSON("data/deals.json").then((data) => {
     threshold = data.threshold || 30;
-    deals = (data.deals || []).slice().sort((a, b) => (b.found_at || "").localeCompare(a.found_at || ""));
+    deals = (data.deals || []).slice().sort((a, b) => (b.published_at || b.found_at || "").localeCompare(a.published_at || a.found_at || ""));
     fillSelect(els.store, [...new Set(deals.map((d) => d.store))].sort(), "Tüm mağazalar", saved.store);
     fillSelect(els.cat, [...new Set(deals.map((d) => d.category).filter(Boolean))].sort(), "Tüm kategoriler", saved.cat);
     els.min.min = threshold;

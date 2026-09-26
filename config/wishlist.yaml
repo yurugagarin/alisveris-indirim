@@ -1,0 +1,44 @@
+# İstek listem
+#
+# Alanlar:
+#   name:          ürün adı (zorunlu)
+#   store:         mağaza adı: IKEA, Zara, Zara Home, Amazon veya stores.yaml'daki başka bir mağaza (zorunlu)
+#   url:           ürün linki (zorunlu)
+#   target_price:  hedef fiyat, euro (opsiyonel)
+#   keywords:      mydealz'da aranacak kelimeler (opsiyonel; boşsa ürün adı kullanılır).
+#                  Başlıkta bu kelimelerin HEPSİ geçen fırsatlar eşleşir.
+#
+# Nasıl kontrol edilir?
+#   IKEA           → ürün sayfası (günde en fazla 4 istek) + gerekirse mydealz
+#   Zara/Zara Home → ürün sayfası denenir; bot engeli varsa mydealz araması
+#   Amazon         → asla doğrudan taranmaz; yalnızca mydealz araması (README'de Keepa alarmı var)
+#
+# Aşağıdakiler ÖRNEKTİR — kendi ürünlerinle değiştir.
+items:
+  - name: "IKEA BILLY Bücherregal, weiß, 80x28x202 cm"
+    store: IKEA
+    url: "https://www.ikea.com/de/de/p/billy-buecherregal-weiss-00263850/"
+    target_price: 39.99
+    keywords: "billy"
+
+  - name: "IKEA KALLAX Regal, weiß, 77x147 cm"
+    store: IKEA
+    url: "https://www.ikea.com/de/de/p/kallax-regal-weiss-80275887/"
+    target_price: 39.99
+    keywords: "kallax"
+
+  - name: "IKEA DRÖNA Fach, dunkelgrau"
+    store: IKEA
+    url: "https://www.ikea.com/de/de/p/droena-fach-dunkelgrau-10443974/"
+    keywords: "dröna"
+
+  - name: "Zara Home Leinen-Bettwäsche"
+    store: Zara Home
+    url: "https://www.zarahome.com/de/"
+    keywords: "zara home bettwäsche"
+
+  - name: "Kindle Paperwhite"
+    store: Amazon
+    url: "https://www.amazon.de/s?k=kindle+paperwhite"
+    target_price: 110
+    keywords: "kindle paperwhite"

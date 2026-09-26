@@ -1,0 +1,88 @@
+name: İndirimleri güncelle
+
+on:
+  schedule:
+    # GitHub cron'u UTC'dir. Berlin 07:00–23:00 aralığı yazın (CEST, UTC+2) 05:00–21:00 UTC,
+    # kışın (CET, UTC+1) 06:00–22:00 UTC'ye denk gelir. İkisini de kapsayan UTC aralığında
+    # 30 dakikada bir tetiklenir; "Berlin saati kontrolü" adımı aralık dışındaki
+    # (yaz/kış farkından doğan) fazladan çalışmaları birkaç saniyede sonlandırır.
+    - cron: "0,30 5-21 * * *"
+    - cron: "0 22 * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Aktif saat kontrolünü atla"
+        type: boolean
+        default: true
+  push:
+    branches: [main, "claude/trusting-hamilton-xtgdvh"]
+    paths: ["config/**", "tracker/**", "site/**", ".github/workflows/update.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Bağımlılıklar
+        run: pip install -q -r requirements.txt
+
+      - name: Yayındaki önceki durumu al
+        run: |
+          git fetch -q --depth=1 origin gh-pages 2>/dev/null \
+            && git show origin/gh-pages:data/status.json > "$RUNNER_TEMP/prev_status.json" 2>/dev/null \
+            || echo "gh-pages henüz yok"
+
+      - name: Pipeline
+        id: run
+        env:
+          FORCE: ${{ github.event_name != 'schedule' && (github.event_name != 'workflow_dispatch' || inputs.force) }}
+        run: |
+          mkdir -p _site
+          ARGS="--out _site/data --prev-status $RUNNER_TEMP/prev_status.json"
+          if [ "$FORCE" = "true" ]; then ARGS="$ARGS --force"; fi
+          python -m tracker.main $ARGS
+
+      - name: Veriyi commit'le
+        if: steps.run.outputs.ran == 'true'
+        run: |
+          # Zamanlanmış workflow'lar 60 gün aktivite olmayınca durur: 40 günden eski commit varsa canlı tut
+          if [ $(( $(date +%s) - $(git log -1 --format=%ct) )) -gt $((40*86400)) ]; then
+            date -u +%FT%TZ > data/.keepalive
+          fi
+          git add data
+          if git diff --cached --quiet; then echo "Veri değişmedi"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -q -m "Veri güncellemesi $(TZ=Europe/Berlin date '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3; do
+            git push -q && exit 0
+            git pull -q --rebase -X theirs origin "${GITHUB_REF_NAME}" || true
+          done
+          echo "::warning::Veri commit'i push edilemedi"
+
+      - name: GitHub Pages'e yayınla (gh-pages dalı)
+        if: steps.run.outputs.ran == 'true' && (steps.run.outputs.deploy == 'true' || github.event_name != 'schedule')
+        run: |
+          cp -r site/. _site/
+          touch _site/.nojekyll
+          cd _site
+          git init -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Site yayını $(date -u +%FT%TZ)"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" gh-pages
