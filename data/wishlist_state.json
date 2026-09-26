@@ -1,0 +1,60 @@
+{
+ "ikea-billy-bucherregal-weiss-80x28x202-cm": {
+  "page_checks": {
+   "date": "2026-09-26",
+   "count": 1
+  },
+  "last_page_check": "2026-09-26T00:01:01Z",
+  "page": {
+   "price": 49.99,
+   "old_price": null,
+   "shop_lowest_30d": null,
+   "name": "BILLY Bücherregal, weiß, 80x28x202 cm",
+   "image": "https://www.ikea.com/de/de/images/products/billy-buecherregal-weiss__1590272_pe1038911_s5.jpg",
+   "checked_at": "2026-09-26T00:01:01Z"
+  }
+ },
+ "ikea-kallax-regal-weiss-77x147-cm": {
+  "page_checks": {
+   "date": "2026-09-26",
+   "count": 1
+  },
+  "last_page_check": "2026-09-26T00:01:01Z",
+  "page": {
+   "price": 49.99,
+   "old_price": 59.99,
+   "shop_lowest_30d": 59.99,
+   "name": "KALLAX Regal, weiß, 77x147 cm",
+   "image": "https://www.ikea.com/de/de/images/products/kallax-regal-weiss__0644757_pe702939_s5.jpg",
+   "checked_at": "2026-09-26T00:01:01Z"
+  }
+ },
+ "ikea-drona-fach-dunkelgrau": {
+  "page_checks": {
+   "date": "2026-09-26",
+   "count": 1
+  },
+  "last_page_check": "2026-09-26T00:01:01Z",
+  "page": {
+   "price": 2.99,
+   "old_price": 4.99,
+   "shop_lowest_30d": 4.99,
+   "name": "DRÖNA Fach, dunkelgrau, 33x38x33 cm",
+   "image": "https://www.ikea.com/de/de/images/products/droena-fach-dunkelgrau__0386600_pe558365_s5.jpg",
+   "checked_at": "2026-09-26T00:01:01Z"
+  }
+ },
+ "zara-home-leinen-bettwasche": {
+  "page_checks": {
+   "date": "2026-09-26",
+   "count": 1
+  },
+  "last_page_check": "2026-09-26T00:01:01Z",
+  "blocked_until": "2026-09-26T20:01:01Z",
+  "last_error": "Engellendi: www.zarahome.com: bot koruması (HTTP 200)",
+  "last_mydealz": "2026-09-26T00:01:01Z"
+ },
+ "kindle-paperwhite": {
+  "last_mydealz": "2026-09-26T00:01:01Z"
+ }
+}
