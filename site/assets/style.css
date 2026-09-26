@@ -36,6 +36,7 @@ header.top {
 }
 .top-inner { max-width: 1100px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .brand { font-weight: 700; font-size: 17px; color: var(--text); text-decoration: none; margin-right: auto; }
+@media (max-width: 480px) { .top-inner { gap: 8px; } .brand { width: calc(100% - 52px); } nav.tabs { order: 3; width: 100%; } }
 nav.tabs { display: flex; gap: 4px; }
 nav.tabs a {
   text-decoration: none; color: var(--muted); padding: 6px 10px; border-radius: 8px; font-size: 14px;
@@ -100,9 +101,10 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
   margin-bottom: 12px; font-size: 14px;
 }
 table.status { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
-table.status th, table.status td { text-align: left; padding: 10px; border-bottom: 1px solid var(--border); vertical-align: top; font-size: 14px; }
+table.status th, table.status td { text-align: left; padding: 10px; border-bottom: 1px solid var(--border); vertical-align: top; font-size: 14px; overflow-wrap: anywhere; }
 table.status th { background: var(--surface-2); font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
 @media (max-width: 640px) {
+  table.status, table.status tbody { display: block; }
   table.status thead { display: none; }
   table.status tr { display: block; border-bottom: 1px solid var(--border); padding: 6px 0; }
   table.status td { display: block; border: 0; padding: 4px 10px; }

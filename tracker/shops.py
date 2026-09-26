@@ -7,6 +7,8 @@ import re
 import uuid
 from datetime import datetime, timezone
 
+import requests
+
 from .net import Blocked, Http
 from .util import discount_pct, iso, parse_price
 
@@ -113,10 +115,16 @@ def fetch_circular(http: Http, stores: dict[str, str], threshold: float, max_ite
     """Berlin IKEA mağazalarının ikinci el / Fundgrube ilanları. Dönüş: (fırsatlar, toplam ilan)."""
     deals, total, page, pages = [], 0, 0, 1
     ids = ",".join(stores)
-    while page < pages and page < 15:
-        r = http.get(f"{CIRCULAR_API}?languageCode=de&size=100&page={page}&storeIds={ids}",
-                     headers={"Accept": "application/json", "Origin": "https://www.ikea.com",
-                              "Referer": CIRCULAR_PAGE})
+    headers = {"Accept": "application/json", "Origin": "https://www.ikea.com", "Referer": CIRCULAR_PAGE}
+    sizes = [64, 48, 32, 16]  # API'nin kabul ettiği en büyük sayfa boyutunu bul (100 → HTTP 400)
+    while page < pages and page < 25:
+        try:
+            r = http.get(f"{CIRCULAR_API}?languageCode=de&size={sizes[0]}&page={page}&storeIds={ids}", headers=headers)
+        except requests.HTTPError as e:
+            if e.response is not None and e.response.status_code == 400 and page == 0 and len(sizes) > 1:
+                sizes.pop(0)
+                continue
+            raise
         d = r.json()
         pages = int(d.get("totalPages") or 1)
         total = int(d.get("totalElements") or 0)

@@ -41,9 +41,15 @@
   function initThemeButton() {
     const btn = document.getElementById("theme-btn");
     if (!btn) return;
-    const labels = { auto: "🌓 Otomatik", light: "☀️ Açık", dark: "🌙 Koyu" };
+    const labels = { auto: "🌓", light: "☀️", dark: "🌙" };
+    const names = { auto: "Tema: otomatik (sistem)", light: "Tema: açık", dark: "Tema: koyu" };
     const order = ["auto", "light", "dark"];
-    const render = () => { btn.textContent = labels[store.get("theme", "auto")] || labels.auto; };
+    const render = () => {
+      const cur = store.get("theme", "auto");
+      btn.textContent = labels[cur] || labels.auto;
+      btn.title = names[cur] || names.auto;
+      btn.setAttribute("aria-label", btn.title);
+    };
     btn.addEventListener("click", () => {
       const cur = store.get("theme", "auto");
       const next = order[(order.indexOf(cur) + 1) % order.length];

@@ -151,7 +151,7 @@ def collect_deals(http, settings, stores, matchers, status, threshold) -> tuple[
             else:
                 scanned.add(m.name)
                 status.ok(key, f"mydealz · {m.name}", detail, items=len(found) - n_deals,
-                          message=f"{n_threads} fırsat tarandı, %{threshold:.0f}+ olan {len(found) - n_deals} yeni kayıt")
+                          message=f"{n_threads} fırsat tarandı, %{threshold:.0f}+ indirimli {len(found) - n_deals} tanesi alındı")
         except Blocked as e:
             status.fail(key, f"mydealz · {m.name}", detail, str(e), state="blocked")
         except Exception as e:  # noqa: BLE001
