@@ -1,0 +1,151 @@
+{
+ "generated_at": "2026-09-26T00:09:20Z",
+ "threshold": 30.0,
+ "items": [
+  {
+   "id": "ikea-billy-bucherregal-weiss-80x28x202-cm",
+   "name": "IKEA BILLY Bücherregal, weiß, 80x28x202 cm",
+   "store": "IKEA",
+   "url": "https://www.ikea.com/de/de/p/billy-buecherregal-weiss-00263850/",
+   "image": "https://www.ikea.com/de/de/images/products/billy-buecherregal-weiss__1590272_pe1038911_s5.jpg",
+   "target_price": 39.99,
+   "current_price": 49.99,
+   "old_price": null,
+   "price_source": "ikea.com",
+   "lowest_price": 49.99,
+   "lowest_30d": 49.99,
+   "shop_lowest_30d": null,
+   "discount": null,
+   "real_discount": null,
+   "highlight": false,
+   "reasons": [],
+   "suspicious": false,
+   "suspicious_reason": null,
+   "status": "ok",
+   "message": null,
+   "mydealz_match": null,
+   "last_checked": "2026-09-26T00:01:01Z",
+   "history": [
+    {
+     "t": "2026-09-26T00:01:01Z",
+     "p": 49.99,
+     "src": "ikea.com"
+    }
+   ]
+  },
+  {
+   "id": "ikea-kallax-regal-weiss-77x147-cm",
+   "name": "IKEA KALLAX Regal, weiß, 77x147 cm",
+   "store": "IKEA",
+   "url": "https://www.ikea.com/de/de/p/kallax-regal-weiss-80275887/",
+   "image": "https://www.ikea.com/de/de/images/products/kallax-regal-weiss__0644757_pe702939_s5.jpg",
+   "target_price": 39.99,
+   "current_price": 49.99,
+   "old_price": 59.99,
+   "price_source": "ikea.com",
+   "lowest_price": 49.99,
+   "lowest_30d": 49.99,
+   "shop_lowest_30d": 59.99,
+   "discount": 16.7,
+   "real_discount": 16.7,
+   "highlight": false,
+   "reasons": [],
+   "suspicious": false,
+   "suspicious_reason": null,
+   "status": "ok",
+   "message": null,
+   "mydealz_match": null,
+   "last_checked": "2026-09-26T00:01:01Z",
+   "history": [
+    {
+     "t": "2026-09-26T00:01:01Z",
+     "p": 49.99,
+     "src": "ikea.com"
+    }
+   ]
+  },
+  {
+   "id": "ikea-drona-fach-dunkelgrau",
+   "name": "IKEA DRÖNA Fach, dunkelgrau",
+   "store": "IKEA",
+   "url": "https://www.ikea.com/de/de/p/droena-fach-dunkelgrau-10443974/",
+   "image": "https://www.ikea.com/de/de/images/products/droena-fach-dunkelgrau__0386600_pe558365_s5.jpg",
+   "target_price": null,
+   "current_price": 2.99,
+   "old_price": 4.99,
+   "price_source": "ikea.com",
+   "lowest_price": 2.99,
+   "lowest_30d": 2.99,
+   "shop_lowest_30d": 4.99,
+   "discount": 40.1,
+   "real_discount": 40.1,
+   "highlight": true,
+   "reasons": [
+    "Son 30 günün en düşük fiyatına (4.99 €) göre %40 ucuz"
+   ],
+   "suspicious": false,
+   "suspicious_reason": null,
+   "status": "ok",
+   "message": null,
+   "mydealz_match": null,
+   "last_checked": "2026-09-26T00:01:01Z",
+   "history": [
+    {
+     "t": "2026-09-26T00:01:01Z",
+     "p": 2.99,
+     "src": "ikea.com"
+    }
+   ]
+  },
+  {
+   "id": "zara-home-leinen-bettwasche",
+   "name": "Zara Home Leinen-Bettwäsche",
+   "store": "Zara Home",
+   "url": "https://www.zarahome.com/de/",
+   "image": null,
+   "target_price": null,
+   "current_price": null,
+   "old_price": null,
+   "price_source": null,
+   "lowest_price": null,
+   "lowest_30d": null,
+   "shop_lowest_30d": null,
+   "discount": null,
+   "real_discount": null,
+   "highlight": false,
+   "reasons": [],
+   "suspicious": false,
+   "suspicious_reason": null,
+   "status": "blocked",
+   "message": "Mağaza sayfası bot korumasıyla engellendi; fiyat mydealz aramasından izleniyor.",
+   "mydealz_match": null,
+   "last_checked": "2026-09-26T00:01:01Z",
+   "history": []
+  },
+  {
+   "id": "kindle-paperwhite",
+   "name": "Kindle Paperwhite",
+   "store": "Amazon",
+   "url": "https://www.amazon.de/s?k=kindle+paperwhite",
+   "image": null,
+   "target_price": 110.0,
+   "current_price": null,
+   "old_price": null,
+   "price_source": null,
+   "lowest_price": null,
+   "lowest_30d": null,
+   "shop_lowest_30d": null,
+   "discount": null,
+   "real_discount": null,
+   "highlight": false,
+   "reasons": [],
+   "suspicious": false,
+   "suspicious_reason": null,
+   "status": "mydealz",
+   "message": "mydealz'da son 30 günde eşleşen aktif fırsat yok (güncel fiyat bilinmiyor).",
+   "mydealz_match": null,
+   "last_checked": "2026-09-26T00:01:01Z",
+   "history": []
+  }
+ ]
+}

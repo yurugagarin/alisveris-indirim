@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Durum · İndirim Takip</title>
+<meta name="description" content="Kişisel indirim takip sitesi (Berlin / Almanya)">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏷️</text></svg>">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/common.js"></script>
+</head>
+<body>
+<header class="top"><div class="top-inner">
+  <a class="brand" href="./">🏷️ İndirim Takip</a>
+  <nav class="tabs">
+    <a href="./">İndirimler</a>
+    <a href="wishlist.html">İstek listem</a>
+    <a href="status.html" aria-current="page">Durum</a>
+  </nav>
+  <button class="btn" id="theme-btn" type="button" title="Tema">🌓</button>
+</div></header>
+<main>
+<p class="meta" id="meta">Yükleniyor…</p>
+<div class="banner" id="banner" hidden></div>
+<table class="status">
+  <thead><tr><th>Kaynak</th><th>Durum</th><th>Son başarılı</th><th>Son deneme</th><th>Mesaj / hatalar</th></tr></thead>
+  <tbody id="rows"></tbody>
+</table>
+<p class="note">Pipeline Berlin saatiyle 07:00–23:00 arası 30 dakikada bir çalışır. Bir kaynak "hata" veya "engellendi" gösteriyorsa ayrıntısı GitHub Actions loglarındadır.</p>
+</main>
+<footer>Veriler mydealz.de, ikea.com/de ve mağaza sayfalarından otomatik toplanır; fiyatlar değişmiş olabilir, satın almadan önce kontrol et. Görüldü/gizle/favori tercihlerin yalnızca bu tarayıcıda saklanır.</footer>
+<script src="assets/status.js"></script>
+</body>
+</html>
