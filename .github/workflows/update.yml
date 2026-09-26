@@ -20,6 +20,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: update-${{ github.ref }}
@@ -74,11 +76,27 @@ jobs:
           done
           echo "::warning::Veri commit'i push edilemedi"
 
-      - name: GitHub Pages'e yayınla (gh-pages dalı)
-        if: steps.run.outputs.ran == 'true' && (steps.run.outputs.deploy == 'true' || github.event_name != 'schedule')
+      - name: Yayın kararı ve Pages modu
+        id: pub
+        if: steps.run.outputs.ran == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
+          if [ "${{ steps.run.outputs.deploy }}" = "true" ] || [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+          fi
+          # Settings → Pages → Source: "GitHub Actions" → workflow, "Deploy from a branch" → legacy
+          mode=$(gh api "repos/${{ github.repository }}/pages" --jq .build_type 2>/dev/null || echo legacy)
+          echo "Pages modu: $mode"
+          echo "mode=$mode" >> "$GITHUB_OUTPUT"
           cp -r site/. _site/
           touch _site/.nojekyll
+
+      - name: Yayınla (Source = Deploy from a branch → gh-pages)
+        if: steps.pub.outputs.deploy == 'true' && steps.pub.outputs.mode != 'workflow'
+        run: |
           cd _site
           git init -q -b gh-pages
           git config user.name "github-actions[bot]"
@@ -86,3 +104,24 @@ jobs:
           git add -A
           git commit -q -m "Site yayını $(date -u +%FT%TZ)"
           git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" gh-pages
+
+      - name: Site paketini hazırla (Source = GitHub Actions)
+        if: steps.pub.outputs.deploy == 'true' && steps.pub.outputs.mode == 'workflow'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+    outputs:
+      pages: ${{ steps.pub.outputs.deploy == 'true' && steps.pub.outputs.mode == 'workflow' }}
+
+  deploy:
+    needs: update
+    if: needs.update.outputs.pages == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

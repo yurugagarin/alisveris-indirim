@@ -18,14 +18,12 @@ de mağaza sayfaları ve mydealz üzerinden takip eden, tamamen ücretsiz çalı
 
 ## İlk kurulum: GitHub Pages'i aç (tek seferlik)
 
-Workflow siteyi `gh-pages` dalına yayınlar. GitHub, Pages'in Actions token'ıyla açılmasına izin
-vermediği için bunu bir kez elle yapman gerekiyor:
+GitHub, Pages'in Actions token'ıyla açılmasına izin vermediği için bunu bir kez elle yapman gerekir:
+repo → **Settings** → **Pages** → **Source**. Workflow iki seçenekle de çalışır ve ayarı her
+çalışmada kendisi okur:
 
-1. Repo → **Settings** → **Pages**
-2. **Build and deployment → Source:** `Deploy from a branch`
-3. **Branch:** `gh-pages`, klasör `/ (root)` → **Save**
-
-1–2 dakika içinde site https://yurugagarin.github.io/alisveris-indirim/ adresinde açılır.
+- **GitHub Actions** (önerilen): site `actions/deploy-pages` ile yayınlanır.
+- **Deploy from a branch** → `gh-pages` / `(root)`: site `gh-pages` dalına yayınlanır.
 
 > Zamanlanmış çalışmalar (cron) yalnızca **varsayılan dalda (`main`)** çalışır; tüm düzenlemeleri
 > `main` dalında yap.
@@ -125,7 +123,7 @@ bir sonraki en iyi fiyattır** (bağımsız bir referans).
   bakar ve aralık dışındaki fazladan çalışmaları hiçbir istek atmadan hemen sonlandırır.
 - Elle çalıştırma: **Actions → İndirimleri güncelle → Run workflow**.
 - `config/`, `tracker/` veya `site/` değişince otomatik çalışır.
-- Veri `data/*.json` olarak commit'lenir (yalnızca içerik gerçekten değiştiyse), site `gh-pages` dalına yayınlanır.
+- Veri `data/*.json` olarak commit'lenir (yalnızca içerik gerçekten değiştiyse), site GitHub Pages'e yayınlanır.
 - **60 gün kuralına karşı önlem:** GitHub, 60 gün aktivite olmayan repolarda zamanlanmış workflow'ları
   durdurur. Veri commit'leri zaten sık olur; yine de son commit 40 günden eskiyse workflow
   `data/.keepalive` dosyasını güncelleyip commit'ler.
@@ -135,7 +133,7 @@ bir sonraki en iyi fiyattır** (bağımsız bir referans).
 | Kalem | Hesap | Aylık |
 |---|---|---|
 | Güncelleme işi | günde 35 tetikleme (33'ü aktif saatte) × 1 dk (tek iş ~20–35 sn sürer; GitHub iş başına dakikayı yukarı yuvarlar) | **≈ 1.070 dk** |
-| GitHub Pages yayını (`pages-build-deployment`, GitHub'ın kendi workflow'u) | yalnızca veri değiştiğinde veya 2 saatte bir, ≈ 15–30 yayın/gün × ~1 dk | ≈ 450–900 dk |
+| GitHub Pages yayını (ayrı `deploy` işi ya da dal modunda GitHub'ın `pages-build-deployment` workflow'u) | yalnızca veri değiştiğinde veya 2 saatte bir, ≈ 15–30 yayın/gün × ~1 dk | ≈ 450–900 dk |
 | **Toplam** | | **≈ 1.500–2.000 dk/ay** |
 
 **Önemli:** Bu repo **public** olduğu için GitHub-hosted runner dakikaları **ücretsiz ve sınırsızdır**.
@@ -183,5 +181,5 @@ config/settings.yaml    eşik, sıklık, RSS akışları, Circular Hub
 tracker/                Python pipeline (mydealz, IKEA/Zara, Circular Hub, istek listesi)
 site/                   statik site (HTML/CSS/JS)
 data/                   JSON veri: deals, wishlist, history, status (workflow commit'ler)
-.github/workflows/update.yml   zamanlama, commit ve gh-pages yayını
+.github/workflows/update.yml   zamanlama, commit ve GitHub Pages yayını
 ```
